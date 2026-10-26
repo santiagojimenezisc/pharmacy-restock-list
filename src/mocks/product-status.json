@@ -1,0 +1,8 @@
+{
+  "complete": {
+    "message": "Producto marcado como completado"
+  },
+  "incomplete": {
+    "message": "Producto marcado como pendiente"
+  }
+}

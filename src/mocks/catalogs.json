@@ -1,0 +1,22 @@
+{
+  "laboratories": [
+    { "id": 1, "name": "Kener", "active": true },
+    { "id": 2, "name": "Bayer", "active": true },
+    { "id": 3, "name": "Pfizer", "active": true },
+    { "id": 4, "name": "Sanofi", "active": true },
+    { "id": 5, "name": "Genomma Lab", "active": true },
+    { "id": 6, "name": "Protec", "active": true },
+    { "id": 7, "name": "Pisa", "active": true }
+  ],
+  "suppliers": [
+    { "id": 1, "name": "Nadro", "active": true },
+    { "id": 2, "name": "Marzam", "active": true },
+    { "id": 3, "name": "Fanasa", "active": true }
+  ],
+  "sectors": [
+    { "id": 1, "name": "Anaquel A - Analgésicos", "active": true },
+    { "id": 2, "name": "Anaquel B - Antibióticos", "active": true },
+    { "id": 3, "name": "Mostrador - Cuidado personal", "active": true },
+    { "id": 4, "name": "Refrigerador", "active": true }
+  ]
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "sectorId": 1,
+    "sectorName": "Anaquel A - Analgésicos",
+    "totalProducts": 4,
+    "incompleteProducts": 3
+  },
+  {
+    "sectorId": 2,
+    "sectorName": "Anaquel B - Antibióticos",
+    "totalProducts": 3,
+    "incompleteProducts": 1
+  },
+  {
+    "sectorId": 3,
+    "sectorName": "Mostrador - Cuidado personal",
+    "totalProducts": 3,
+    "incompleteProducts": 2
+  },
+  {
+    "sectorId": 4,
+    "sectorName": "Refrigerador",
+    "totalProducts": 0,
+    "incompleteProducts": 0
+  }
+]
