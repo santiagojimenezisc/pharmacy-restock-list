@@ -85,8 +85,8 @@
         </section>
 
         <div class="flex justify-end">
-            <Button type="submit" label="Agregar producto" icon="pi pi-plus" :disabled="!newProduct"
-                :loading="isSaving" />
+            <Button type="submit" :label="product ? 'Guardar cambios' : 'Agregar producto'"
+                :icon="product ? 'pi pi-check' : 'pi pi-plus'" :disabled="!newProduct" :loading="isSaving" />
         </div>
     </form>
 </template>
@@ -96,13 +96,11 @@ import { computed, onMounted, ref } from 'vue'
 import { Button, InputNumber, InputText, Select, Textarea, ToggleSwitch } from 'primevue'
 import { useToast } from 'primevue/usetoast'
 import { formatCurrency } from '@/helpers/commons'
-import type { CatalogItem, NewProduct } from '@/interfaces'
+import type { CatalogItem, NewProduct, Product } from '@/interfaces'
 import { getLaboratories, getSectors, getSuppliers } from '@/services/catalogs'
-import { createProduct } from '@/services/products'
+import { createProduct, updateProduct } from '@/services/products'
 
-// Los campos numéricos y los selects empiezan vacíos (null) hasta que el usuario elige;
-// las etiquetas se escriben como texto separado por comas
-type ProductForm = Omit<NewProduct, 'quantity' | 'price' | 'laboratoryId' | 'supplierId' | 'sectorId' | 'tags'> & {
+type FormValues = Omit<NewProduct, 'quantity' | 'price' | 'laboratoryId' | 'supplierId' | 'sectorId' | 'tags'> & {
     quantity: number | null
     price: number | null
     laboratoryId: number | null
@@ -111,7 +109,7 @@ type ProductForm = Omit<NewProduct, 'quantity' | 'price' | 'laboratoryId' | 'sup
     tags: string
 }
 
-const emptyForm = (): ProductForm => ({
+const emptyForm = (): FormValues => ({
     name: '',
     activeSubstance: '',
     description: '',
@@ -126,17 +124,32 @@ const emptyForm = (): ProductForm => ({
     isMedicine: true
 })
 
+const productToForm = (product: Product): FormValues => ({
+    name: product.name,
+    activeSubstance: product.activeSubstance,
+    description: product.description,
+    quantity: product.quantity,
+    grammage: product.grammage,
+    price: product.price,
+    laboratoryId: product.laboratoryId,
+    supplierId: product.supplierId,
+    sectorId: product.sectorId,
+    category: product.category,
+    tags: Array.isArray(product.tags) ? product.tags.join(', ') : '',
+    isMedicine: product.isMedicine
+})
+
 const laboratories = ref<CatalogItem[]>([])
 const suppliers = ref<CatalogItem[]>([])
 const sectors = ref<CatalogItem[]>([])
 
-const emit = defineEmits<{ created: [] }>()
+const props = defineProps<{ product: Product | null }>()
+const emit = defineEmits<{ saved: [] }>()
 
-const form = ref<ProductForm>(emptyForm())
+const form = ref<FormValues>(props.product ? productToForm(props.product) : emptyForm())
 const isSaving = ref(false)
 const toast = useToast()
 
-// Los tres catálogos no dependen entre sí, así que se piden al mismo tiempo
 const loadCatalogs = async () => {
     try {
         const [laboratoryList, supplierList, sectorList] = await Promise.all([
@@ -160,7 +173,6 @@ const loadCatalogs = async () => {
 
 onMounted(loadCatalogs)
 
-// null mientras falte un campo obligatorio; así el botón se desactiva solo
 const newProduct = computed<NewProduct | null>(() => {
     const { quantity, price, laboratoryId, supplierId, sectorId, ...rest } = form.value
     if (!rest.name.trim() || !rest.description.trim()) return null
@@ -185,15 +197,19 @@ const submit = async () => {
 
     isSaving.value = true
     try {
-        await createProduct(product)
+        if (props.product) {
+            await updateProduct(props.product.id, product)
+        } else {
+            await createProduct(product)
+        }
         toast.add({
             severity: 'success',
-            summary: 'Producto agregado',
+            summary: props.product ? 'Producto actualizado' : 'Producto agregado',
             detail: `${product.name} se guardó correctamente.`,
             life: 4000
         })
         form.value = emptyForm()
-        emit('created')
+        emit('saved')
     } catch (error) {
         console.error(error)
         toast.add({
