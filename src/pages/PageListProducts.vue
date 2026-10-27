@@ -1,11 +1,6 @@
 <template>
     <!-- pb-24 deja un espacio al final para que el botón flotante no tape los totales -->
     <div class="pb-24">
-        <RouterLink to="/" class="inline-flex items-center gap-2 mb-4 text-surface-400 hover:text-surface-0">
-            <i class="pi pi-arrow-left"></i>
-            Volver a los anaqueles
-        </RouterLink>
-
         <Skeleton v-if="isLoading" height="20rem" />
         <Message v-else-if="errorMessage" severity="error">{{ errorMessage }}</Message>
         <ListProducts v-else :nameSector="sectorName" :productsList="productsList" @edit="openEditProduct"

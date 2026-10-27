@@ -1,7 +1,7 @@
 <template>
     <RouterLink v-for="{ incompleteProducts, sectorId, sectorName, totalProducts } in sectorsList" :key="sectorId"
         :to="{ path: `/sectors/${sectorId}`, query: { name: sectorName } }"
-        class="flex flex-col gap-4 my-8 px-6 py-3 rounded border border-surface bg-surface-900 hover:bg-emphasis focus-visible:outline-2 focus-visible:outline-primary">
+        class="flex flex-col gap-4 my-8 px-6 py-3 rounded border border-surface bg-surface-0 dark:bg-surface-900 hover:bg-emphasis focus-visible:outline-2 focus-visible:outline-primary">
         <div class="flex items-center justify-between text-lg">
             <p>{{ sectorName }}</p>
             <p>{{ totalProducts - incompleteProducts }} / {{ totalProducts }}</p>
