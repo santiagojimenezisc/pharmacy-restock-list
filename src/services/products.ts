@@ -53,3 +53,13 @@ export const updateProduct = async (
     throw new Error("Error al actualizar el producto");
   }
 };
+
+export const deleteProduct = async (id: number): Promise<void> => {
+  const response = await fetch(`${API_URL}/api/products-to-buy/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Error al eliminar el producto");
+  }
+};

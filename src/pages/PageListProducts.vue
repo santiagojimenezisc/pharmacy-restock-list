@@ -8,7 +8,8 @@
 
         <Skeleton v-if="isLoading" height="20rem" />
         <Message v-else-if="errorMessage" severity="error">{{ errorMessage }}</Message>
-        <ListProducts v-else :nameSector="sectorName" :productsList="productsList" @edit="openEditProduct" />
+        <ListProducts v-else :nameSector="sectorName" :productsList="productsList" @edit="openEditProduct"
+            @delete="confirmDeleteProduct" />
     </div>
 
     <div v-if="!showProductForm" class="fixed bottom-6 right-6">
@@ -26,8 +27,11 @@
 import ProductForm from '@/components/ProductForm.vue'
 import ListProducts from '@/components/ListProducts.vue'
 import type { Product } from '@/interfaces'
+import { deleteProduct } from '@/services/products'
 import { getProductsBySector } from '@/services/sectors'
 import { Button, Dialog, Message, Skeleton } from 'primevue'
+import { useConfirm } from 'primevue/useconfirm'
+import { useToast } from 'primevue/usetoast'
 import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -36,6 +40,8 @@ const isLoading = ref(false)
 const productsList = ref<Product[]>([])
 const showProductForm = ref(false)
 const editingProduct = ref<Product | null>(null)
+const confirm = useConfirm()
+const toast = useToast()
 
 const openNewProduct = () => {
     editingProduct.value = null
@@ -62,12 +68,49 @@ const loadProducts = async () => {
     }
 }
 
-const onProductSaved = async () => {
-    showProductForm.value = false
+const refreshProducts = async () => {
     try {
         productsList.value = await getProductsBySector(sectorId)
     } catch (error) {
         console.error(error)
+    }
+}
+
+const onProductSaved = () => {
+    showProductForm.value = false
+    refreshProducts()
+}
+
+const confirmDeleteProduct = (product: Product) => {
+    confirm.require({
+        header: 'Eliminar producto',
+        message: `¿Eliminar "${product.name} ${product.laboratoryName}"? Esta acción no se puede deshacer.`,
+        icon: 'pi pi-exclamation-triangle',
+        defaultFocus: 'reject',
+        rejectProps: { label: 'Cancelar', severity: 'secondary', outlined: true },
+        acceptProps: { label: 'Eliminar', icon: 'pi pi-trash', severity: 'danger' },
+        accept: () => removeProduct(product)
+    })
+}
+
+const removeProduct = async (product: Product) => {
+    try {
+        await deleteProduct(product.id)
+        toast.add({
+            severity: 'success',
+            summary: 'Producto eliminado',
+            detail: `${product.name} se eliminó de la lista.`,
+            life: 4000
+        })
+        refreshProducts()
+    } catch (error) {
+        console.error(error)
+        toast.add({
+            severity: 'error',
+            summary: 'No se pudo eliminar',
+            detail: 'Revisa tu conexión e inténtalo de nuevo.',
+            life: 5000
+        })
     }
 }
 

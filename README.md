@@ -17,6 +17,7 @@ Esta app guarda los productos con su precio de costo y su proveedor, los organiz
 - Sectores (anaqueles) con su avance: cuántos productos ya se compraron y el porcentaje.
 - Lista de productos por sector, con laboratorio, precio de costo × cantidad y proveedor.
 - Agregar productos desde un formulario: los laboratorios, proveedores y anaqueles se cargan del servidor.
+- Editar y eliminar productos desde el menú de cada renglón; eliminar pide confirmación.
 - Marcar productos como comprados al instante; si el servidor falla, el cambio se revierte y se avisa.
 - Totales por anaquel: por comprar, comprados y total.
 - Búsqueda de productos que ignora acentos y mayúsculas ("acido" encuentra "Ácido").
@@ -75,8 +76,8 @@ docs/capturas/    imágenes de este README
 
 Este es el primer módulo de un punto de venta pensado para el flujo de trabajo de una farmacia de barrio. La idea es que la lista de resurtido se genere sola a partir de las ventas, sin olvidos ni costos desactualizados.
 
-- [x] Agregar productos
-- [ ] Editar y borrar productos
+- [x] ~~Agregar productos~~
+- [x] ~~Editar y borrar productos~~
 - [ ] Crear, editar y borrar anaqueles
 - [ ] Vista de compras agrupada por proveedor, con el total a pagar en cada uno
 - [ ] Modo sin backend con datos de ejemplo (MSW)
