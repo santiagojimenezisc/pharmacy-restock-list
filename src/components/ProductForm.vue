@@ -7,7 +7,7 @@
         </div>
 
         <section class="flex flex-col gap-4">
-            <h3 class="text-sm font-semibold uppercase text-surface-400">
+            <h3 class="text-sm font-semibold uppercase text-muted-color">
                 Datos del {{ form.isMedicine ? 'medicamento' : 'producto' }}
             </h3>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -17,12 +17,12 @@
                 </div>
 
                 <div v-if="form.isMedicine" class="flex flex-col gap-2">
-                    <label for="activeSubstance">Sustancia activa <span class="text-surface-400">(opcional)</span></label>
+                    <label for="activeSubstance">Sustancia activa <span class="text-muted-color">(opcional)</span></label>
                     <InputText id="activeSubstance" v-model="form.activeSubstance" fluid />
                 </div>
 
                 <div class="flex flex-col gap-2">
-                    <label for="grammage">Gramaje <span class="text-surface-400">(opcional)</span></label>
+                    <label for="grammage">Gramaje <span class="text-muted-color">(opcional)</span></label>
                     <InputText id="grammage" v-model="form.grammage" placeholder="p. ej. 500 mg" fluid />
                 </div>
 
@@ -41,7 +41,7 @@
         </section>
 
         <section class="flex flex-col gap-4">
-            <h3 class="text-sm font-semibold uppercase text-surface-400">Compra</h3>
+            <h3 class="text-sm font-semibold uppercase text-muted-color">Compra</h3>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="flex flex-col gap-2">
                     <label for="supplier">Proveedor</label>
@@ -64,7 +64,7 @@
         </section>
 
         <section class="flex flex-col gap-4">
-            <h3 class="text-sm font-semibold uppercase text-surface-400">Ubicación</h3>
+            <h3 class="text-sm font-semibold uppercase text-muted-color">Ubicación</h3>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="flex flex-col gap-2">
                     <label for="sector">Anaquel</label>
@@ -73,12 +73,12 @@
                 </div>
 
                 <div class="flex flex-col gap-2">
-                    <label for="category">Categoría <span class="text-surface-400">(opcional)</span></label>
+                    <label for="category">Categoría <span class="text-muted-color">(opcional)</span></label>
                     <InputText id="category" v-model="form.category" placeholder="p. ej. Analgésicos" fluid />
                 </div>
 
                 <div class="flex flex-col gap-2">
-                    <label for="tags">Etiquetas <span class="text-surface-400">(opcional)</span></label>
+                    <label for="tags">Etiquetas <span class="text-muted-color">(opcional)</span></label>
                     <InputText id="tags" v-model="form.tags" placeholder="p. ej. dolor, fiebre" fluid />
                 </div>
             </div>
