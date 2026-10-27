@@ -36,3 +36,20 @@ export const createProduct = async (
 
   return response.json();
 };
+
+export const updateProduct = async (
+  id: number,
+  product: NewProduct,
+): Promise<void> => {
+  const response = await fetch(`${API_URL}/api/products-to-buy/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(product),
+  });
+
+  if (!response.ok) {
+    throw new Error("Error al actualizar el producto");
+  }
+};

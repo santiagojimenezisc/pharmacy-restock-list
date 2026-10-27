@@ -8,22 +8,22 @@
 
         <Skeleton v-if="isLoading" height="20rem" />
         <Message v-else-if="errorMessage" severity="error">{{ errorMessage }}</Message>
-        <ListProducts v-else :nameSector="sectorName" :productsList="productsList" />
+        <ListProducts v-else :nameSector="sectorName" :productsList="productsList" @edit="openEditProduct" />
     </div>
 
-    <div v-if="!showAddProduct" class="fixed bottom-6 right-6">
-        <Button label="Agregar" icon="pi pi-plus" size="large" rounded raised @click="showAddProduct = true" />
+    <div v-if="!showProductForm" class="fixed bottom-6 right-6">
+        <Button label="Agregar" icon="pi pi-plus" size="large" rounded raised @click="openNewProduct" />
     </div>
 
-    <Dialog v-model:visible="showAddProduct" header="Agregar producto" modal :style="{ width: '50rem' }"
-        :breakpoints="{ '640px': '100vw' }"
+    <Dialog v-model:visible="showProductForm" :header="editingProduct ? 'Editar producto' : 'Agregar producto'" modal
+        :style="{ width: '50rem' }" :breakpoints="{ '640px': '100vw' }"
         class="max-sm:h-dvh! max-sm:max-h-dvh! max-sm:rounded-none!">
-        <AddProduct @created="onProductCreated" />
+        <ProductForm :product="editingProduct" @saved="onProductSaved" />
     </Dialog>
 </template>
 
 <script setup lang="ts">
-import AddProduct from '@/components/AddProduct.vue'
+import ProductForm from '@/components/ProductForm.vue'
 import ListProducts from '@/components/ListProducts.vue'
 import type { Product } from '@/interfaces'
 import { getProductsBySector } from '@/services/sectors'
@@ -34,7 +34,18 @@ import { useRoute } from 'vue-router'
 const errorMessage = ref("")
 const isLoading = ref(false)
 const productsList = ref<Product[]>([])
-const showAddProduct = ref(false)
+const showProductForm = ref(false)
+const editingProduct = ref<Product | null>(null)
+
+const openNewProduct = () => {
+    editingProduct.value = null
+    showProductForm.value = true
+}
+
+const openEditProduct = (product: Product) => {
+    editingProduct.value = product
+    showProductForm.value = true
+}
 const route = useRoute()
 const sectorId = Number(route.params.id)
 
@@ -51,9 +62,8 @@ const loadProducts = async () => {
     }
 }
 
-// Recarga sin el Skeleton para que la lista no parpadee detrás del modal que se cierra
-const onProductCreated = async () => {
-    showAddProduct.value = false
+const onProductSaved = async () => {
+    showProductForm.value = false
     try {
         productsList.value = await getProductsBySector(sectorId)
     } catch (error) {

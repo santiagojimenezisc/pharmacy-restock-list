@@ -23,9 +23,12 @@
                     </p>
                     <p>{{ formatCurrency(price * quantity) }}</p>
                     <Avatar :label="getInitials(supplierName)" shape="circle" v-tooltip="supplierName" />
+                    <Button icon="pi pi-ellipsis-v" text rounded severity="secondary" :aria-label="`Opciones de ${name}`"
+                        aria-haspopup="true" aria-controls="product-menu" @click="openMenu($event, id)" />
                 </div>
             </div>
         </div>
+        <Menu ref="menu" id="product-menu" :model="menuItems" popup />
         <div v-if="productsList.length === 0">
             <Message severity="warn">
                 <template #icon>
@@ -56,8 +59,9 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, toRefs } from 'vue'
-import { Avatar, Checkbox, IconField, InputIcon, InputText, Label, Divider } from 'primevue'
+import { computed, ref, toRefs, useTemplateRef } from 'vue'
+import { Avatar, Button, Checkbox, IconField, InputIcon, InputText, Label, Divider, Menu } from 'primevue'
+import type { MenuItem } from 'primevue/menuitem'
 import Message from 'primevue/message'
 import { useToast } from 'primevue/usetoast'
 import { formatCurrency, getInitials, normalizeText } from '@/helpers/commons'
@@ -69,9 +73,28 @@ const props = defineProps<{
     productsList: Product[]
 }>()
 
+const emit = defineEmits<{ edit: [product: Product] }>()
+
 const { nameSector, productsList } = toRefs(props)
 const barSearch = ref("")
 const toast = useToast()
+const menu = useTemplateRef<InstanceType<typeof Menu>>('menu')
+const selectedProduct = ref<Product | null>(null)
+
+const menuItems: MenuItem[] = [
+    {
+        label: 'Editar',
+        icon: 'pi pi-pencil',
+        command: () => {
+            if (selectedProduct.value) emit('edit', selectedProduct.value)
+        }
+    }
+]
+
+const openMenu = (event: Event, id: number) => {
+    selectedProduct.value = productsList.value.find((product) => product.id === id) ?? null
+    menu.value?.toggle(event)
+}
 
 const checkedProductList = async (id: number) => {
     const product = productsList.value.find((product: Product) => product.id === id)
