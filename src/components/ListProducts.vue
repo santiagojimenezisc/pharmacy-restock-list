@@ -73,7 +73,10 @@ const props = defineProps<{
     productsList: Product[]
 }>()
 
-const emit = defineEmits<{ edit: [product: Product] }>()
+const emit = defineEmits<{
+    edit: [product: Product]
+    delete: [product: Product]
+}>()
 
 const { nameSector, productsList } = toRefs(props)
 const barSearch = ref("")
@@ -87,6 +90,14 @@ const menuItems: MenuItem[] = [
         icon: 'pi pi-pencil',
         command: () => {
             if (selectedProduct.value) emit('edit', selectedProduct.value)
+        }
+    },
+    {
+        label: 'Eliminar',
+        icon: 'pi pi-trash',
+        class: '**:text-red-400!',
+        command: () => {
+            if (selectedProduct.value) emit('delete', selectedProduct.value)
         }
     }
 ]
