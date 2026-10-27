@@ -5,7 +5,7 @@
 
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
   font-family:
     Inter,
     system-ui,
@@ -15,6 +15,10 @@
     sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
+}
+
+:root.app-dark {
+  color-scheme: dark;
 }
 
 * {

@@ -113,7 +113,7 @@ const menuItems: MenuItem[] = [
     {
         label: 'Eliminar',
         icon: 'pi pi-trash',
-        class: '**:text-red-400!',
+        class: '**:text-red-600! dark:**:text-red-400!',
         command: () => {
             if (selectedProduct.value) emit('delete', selectedProduct.value)
         }
