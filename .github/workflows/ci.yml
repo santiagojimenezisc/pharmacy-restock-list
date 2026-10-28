@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Revisar y compilar
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v5
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Revisar tipos
+        run: npm run type-check
+
+      - name: Revisar el código con ESLint
+        run: npx eslint .
+
+      - name: Revisar el formato con Prettier
+        run: npx prettier --check src/
+
+      - name: Correr las pruebas
+        run: npx vitest run
+
+      - name: Compilar para producción
+        run: npm run build-only
