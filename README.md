@@ -4,7 +4,7 @@ Lista de resurtido digital para farmacias de barrio pequeñas.
 
 **Demo en línea:** próximamente en `lista-resurtido.santiagojmz.com`
 
-![Lista de productos de un anaquel, con precio por cantidad, proveedor y totales](docs/capturas/lista-anaquel.png)
+![Lista de productos de un anaquel, con precio por cantidad, proveedor y totales](docs/capturas/lista-anaquel-ligero.png)
 
 ## El problema
 
@@ -27,7 +27,7 @@ Esta app guarda los productos con su precio de costo y su proveedor, los organiz
 
 | Anaqueles con su avance | Agregar un producto |
 | --- | --- |
-| ![Lista de anaqueles con barra de avance](docs/capturas/anaqueles.png) | ![Formulario para agregar un producto](docs/capturas/agregar-producto.png) |
+| ![Lista de anaqueles con barra de avance](docs/capturas/anaqueles-modo-ligero.png) | ![Formulario para agregar un producto](docs/capturas/agregar-producto-ligero.png) |
 
 ## Tecnologías
 
@@ -85,4 +85,3 @@ Este es el primer módulo de un punto de venta pensado para el flujo de trabajo 
 - [ ] Modo sin backend con datos de ejemplo (MSW)
 - [ ] Pruebas automatizadas y linter
 - [ ] Demo en línea
-- [ ] Conectar con el módulo de ventas
