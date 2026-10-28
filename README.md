@@ -1,5 +1,7 @@
 # Lista de resurtido farmacéutico
 
+[![CI](https://github.com/santiagojimenezisc/pharmacy-restock-list/actions/workflows/ci.yml/badge.svg)](https://github.com/santiagojimenezisc/pharmacy-restock-list/actions/workflows/ci.yml)
+
 Lista de resurtido digital para farmacias de barrio pequeñas.
 
 **Demo en línea:** próximamente en `lista-resurtido.santiagojmz.com`
@@ -38,6 +40,7 @@ Esta app guarda los productos con su precio de costo y su proveedor, los organiz
 - **Vue Router**
 - **Vite**
 - **Vitest** para pruebas, **ESLint** para revisar el código y **Prettier** para darle formato
+- **GitHub Actions** (CI): en cada PR revisa tipos, lint, formato y pruebas, y compila
 - Servidor (backend): **Express.js** + **MySQL** (repositorio aparte)
 
 ## Cómo correrlo
