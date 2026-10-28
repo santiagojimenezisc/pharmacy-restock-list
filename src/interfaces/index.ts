@@ -49,6 +49,16 @@ export interface CatalogItem {
   active: boolean;
 }
 
+export interface NewSector {
+  name: string;
+  description?: string;
+}
+
+export interface CreateSectorResponse {
+  message: string;
+  id: number;
+}
+
 export interface SectorList {
   sectorId: number;
   sectorName: string;

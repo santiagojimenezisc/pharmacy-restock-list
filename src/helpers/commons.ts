@@ -20,6 +20,16 @@ export const normalizeText = (text: string) => {
     .trim();
 };
 
+export const isNameTaken = (name: string, names: string[]) => {
+  return names.some((existing) => normalizeText(existing) === normalizeText(name));
+};
+
+export const getErrorMessage = (error: unknown) => {
+  return error instanceof Error && !(error instanceof TypeError)
+    ? error.message
+    : "Revisa tu conexión e inténtalo de nuevo.";
+};
+
 export const formatCurrency = (amount: number) => {
   return currencyFormatter.format(amount);
 };
