@@ -7,9 +7,12 @@ const showMenu = ref(false)
 const isDark = ref(document.documentElement.classList.contains('app-dark'))
 const route = useRoute()
 
-watch(() => route.fullPath, () => {
-  showMenu.value = false
-})
+watch(
+  () => route.fullPath,
+  () => {
+    showMenu.value = false
+  },
+)
 
 const toggleTheme = () => {
   isDark.value = !isDark.value
@@ -22,18 +25,32 @@ const toggleTheme = () => {
   <ConfirmDialog />
   <div class="min-h-screen bg-surface-50 dark:bg-surface-950 text-color lg:flex">
     <aside
-      class="max-lg:hidden flex flex-col w-60 shrink-0 p-4 border-r border-surface bg-surface-0 dark:bg-surface-900 lg:sticky lg:top-0 lg:h-screen">
+      class="max-lg:hidden flex flex-col w-60 shrink-0 p-4 border-r border-surface bg-surface-0 dark:bg-surface-900 lg:sticky lg:top-0 lg:h-screen"
+    >
       <div class="mb-4 text-xl font-semibold">Resurtido</div>
       <RouterLink to="/" class="flex items-center gap-2 p-2 rounded hover:bg-emphasis">
         <i class="pi pi-th-large"></i>
         Anaqueles
       </RouterLink>
-      <Button :label="isDark ? 'Modo claro' : 'Modo oscuro'" :icon="isDark ? 'pi pi-sun' : 'pi pi-moon'" text
-        severity="secondary" class="mt-auto justify-start!" @click="toggleTheme" />
+      <Button
+        :label="isDark ? 'Modo claro' : 'Modo oscuro'"
+        :icon="isDark ? 'pi pi-sun' : 'pi pi-moon'"
+        text
+        severity="secondary"
+        class="mt-auto justify-start!"
+        @click="toggleTheme"
+      />
     </aside>
 
     <header class="lg:hidden flex items-center gap-2 p-2 border-b border-surface">
-      <Button icon="pi pi-bars" text rounded severity="secondary" aria-label="Abrir menú" @click="showMenu = true" />
+      <Button
+        icon="pi pi-bars"
+        text
+        rounded
+        severity="secondary"
+        aria-label="Abrir menú"
+        @click="showMenu = true"
+      />
       <span class="text-xl font-semibold">Resurtido</span>
     </header>
 
@@ -43,8 +60,14 @@ const toggleTheme = () => {
           <i class="pi pi-th-large"></i>
           Anaqueles
         </RouterLink>
-        <Button :label="isDark ? 'Modo claro' : 'Modo oscuro'" :icon="isDark ? 'pi pi-sun' : 'pi pi-moon'" text
-          severity="secondary" class="mt-auto justify-start!" @click="toggleTheme" />
+        <Button
+          :label="isDark ? 'Modo claro' : 'Modo oscuro'"
+          :icon="isDark ? 'pi pi-sun' : 'pi pi-moon'"
+          text
+          severity="secondary"
+          class="mt-auto justify-start!"
+          @click="toggleTheme"
+        />
       </div>
     </Drawer>
 

@@ -1,84 +1,72 @@
-import type {
-  CreateSectorResponse,
-  NewSector,
-  Product,
-  SectorList,
-} from "@/interfaces";
+import type { CreateSectorResponse, NewSector, Product, SectorList } from '@/interfaces'
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL
 
 const errorFrom = async (response: Response, fallback: string) => {
   try {
-    const { message } = await response.json();
-    return new Error(message ?? fallback);
+    const { message } = await response.json()
+    return new Error(message ?? fallback)
   } catch {
-    return new Error(fallback);
+    return new Error(fallback)
   }
-};
+}
 
 export const getSectorsSummary = async (): Promise<SectorList[]> => {
-  const response = await fetch(`${API_URL}/api/sectors/summary`);
+  const response = await fetch(`${API_URL}/api/sectors/summary`)
 
   if (!response.ok) {
-    throw new Error("Error al obtener el resumen de sectores");
+    throw new Error('Error al obtener el resumen de sectores')
   }
 
-  return response.json();
-};
+  return response.json()
+}
 
-export const getProductsBySector = async (
-  sectorId: number
-): Promise<Product[]> => {
-  const response = await fetch(`${API_URL}/api/sectors/${sectorId}`);
+export const getProductsBySector = async (sectorId: number): Promise<Product[]> => {
+  const response = await fetch(`${API_URL}/api/sectors/${sectorId}`)
 
   if (!response.ok) {
-    throw new Error("Error al obtener los productos del sector");
+    throw new Error('Error al obtener los productos del sector')
   }
 
-  return response.json();
-};
+  return response.json()
+}
 
-export const createSector = async (
-  sector: NewSector,
-): Promise<CreateSectorResponse> => {
+export const createSector = async (sector: NewSector): Promise<CreateSectorResponse> => {
   const response = await fetch(`${API_URL}/api/sectors`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(sector),
-  });
+  })
 
   if (!response.ok) {
-    throw await errorFrom(response, "Error al crear el anaquel");
+    throw await errorFrom(response, 'Error al crear el anaquel')
   }
 
-  return response.json();
-};
+  return response.json()
+}
 
-export const updateSector = async (
-  id: number,
-  sector: NewSector,
-): Promise<void> => {
+export const updateSector = async (id: number, sector: NewSector): Promise<void> => {
   const response = await fetch(`${API_URL}/api/sectors/${id}`, {
-    method: "PUT",
+    method: 'PUT',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(sector),
-  });
+  })
 
   if (!response.ok) {
-    throw await errorFrom(response, "Error al actualizar el anaquel");
+    throw await errorFrom(response, 'Error al actualizar el anaquel')
   }
-};
+}
 
 export const deleteSector = async (id: number): Promise<void> => {
   const response = await fetch(`${API_URL}/api/sectors/${id}`, {
-    method: "DELETE",
-  });
+    method: 'DELETE',
+  })
 
   if (!response.ok) {
-    throw await errorFrom(response, "Error al eliminar el anaquel");
+    throw await errorFrom(response, 'Error al eliminar el anaquel')
   }
-};
+}

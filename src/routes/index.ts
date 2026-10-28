@@ -5,17 +5,17 @@ import PageListProducts from '@/pages/PageListProducts.vue'
 const routes = [
   {
     path: '/',
-    component: PageSectors
+    component: PageSectors,
   },
   {
     path: '/sectors/:id',
-    component: PageListProducts
-  }
+    component: PageListProducts,
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
 })
 
 export default router
