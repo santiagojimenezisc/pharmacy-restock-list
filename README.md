@@ -14,7 +14,7 @@ Esta app guarda los productos con su precio de costo y su proveedor, los organiz
 
 ## Funcionalidades
 
-- Sectores (anaqueles) con su avance: cuántos productos ya se compraron y el porcentaje.
+- Sectores (anaqueles) agrupados en con pendientes, completos y sin productos, con su avance; desde un anaquel vacío se agregan productos directo.
 - Lista de productos por sector, con laboratorio, precio de costo × cantidad y proveedor.
 - Agregar y editar productos en un formulario con validación por campo: los laboratorios, proveedores y anaqueles se cargan del servidor, y el anaquel abierto viene preseleccionado.
 - Eliminar productos desde el menú de cada renglón, con confirmación.
