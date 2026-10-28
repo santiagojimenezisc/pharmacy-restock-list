@@ -16,12 +16,14 @@ Esta app guarda los productos con su precio de costo y su proveedor, los organiz
 
 - Sectores (anaqueles) con su avance: cuántos productos ya se compraron y el porcentaje.
 - Lista de productos por sector, con laboratorio, precio de costo × cantidad y proveedor.
-- Agregar productos desde un formulario: los laboratorios, proveedores y anaqueles se cargan del servidor.
-- Editar y eliminar productos desde el menú de cada renglón; eliminar pide confirmación.
+- Agregar y editar productos en un formulario con validación por campo: los laboratorios, proveedores y anaqueles se cargan del servidor, y el anaquel abierto viene preseleccionado.
+- Eliminar productos desde el menú de cada renglón, con confirmación.
 - Marcar productos como comprados al instante; si el servidor falla, el cambio se revierte y se avisa.
-- Totales por anaquel: por comprar, comprados y total.
+- Resumen de cada anaquel: por comprar, comprado, total, porcentaje de avance y cuánto falta comprarle a cada proveedor.
+- Filtros de todos, pendientes y comprados, combinables con la búsqueda.
 - Búsqueda de productos que ignora acentos y mayúsculas ("acido" encuentra "Ácido").
-- Estados de carga y de error en cada pantalla, y diseño adaptado a celular.
+- Modo claro y oscuro: recuerda la elección o sigue el del sistema.
+- Estados de carga y de error en cada pantalla, y diseño adaptado a celular, tableta y escritorio.
 
 | Anaqueles con su avance | Agregar un producto |
 | --- | --- |
@@ -30,7 +32,7 @@ Esta app guarda los productos con su precio de costo y su proveedor, los organiz
 ## Tecnologías
 
 - **Vue 3** (Composition API + `<script setup>`) con **TypeScript**
-- **PrimeVue** para componentes de interfaz, elegido por ser más ligero que Quasar o Vuetify
+- **PrimeVue** para componentes de interfaz, elegido por ser más ligero que Quasar o Vuetify, y **PrimeVue Forms** para la validación de formularios
 - **Tailwind CSS**
 - **Vue Router**
 - **Vite**
@@ -63,9 +65,9 @@ npm run type-check   # solo revisa tipos
 ```
 src/
 ├── pages/        pantallas (lista de anaqueles y productos de un anaquel)
-├── components/   piezas de interfaz (listas y formulario)
+├── components/   piezas de interfaz (listas, resumen del anaquel y formulario)
 ├── services/     llamadas al API; los componentes nunca usan fetch directo
-├── helpers/      funciones puras (formato de moneda, iniciales, búsqueda sin acentos)
+├── helpers/      funciones puras (formato de moneda, búsqueda sin acentos, reglas del formulario)
 ├── interfaces/   tipos de TypeScript
 └── mocks/        respuestas de ejemplo del API, para trabajar sin backend (en preparación)
 
