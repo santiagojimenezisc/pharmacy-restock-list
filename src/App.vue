@@ -22,7 +22,7 @@ const toggleTheme = () => {
   <ConfirmDialog />
   <div class="min-h-screen bg-surface-50 dark:bg-surface-950 text-color lg:flex">
     <aside
-      class="max-lg:hidden flex flex-col w-60 shrink-0 p-4 border-r border-surface lg:sticky lg:top-0 lg:h-screen">
+      class="max-lg:hidden flex flex-col w-60 shrink-0 p-4 border-r border-surface bg-surface-0 dark:bg-surface-900 lg:sticky lg:top-0 lg:h-screen">
       <div class="mb-4 text-xl font-semibold">Resurtido</div>
       <RouterLink to="/" class="flex items-center gap-2 p-2 rounded hover:bg-emphasis">
         <i class="pi pi-th-large"></i>

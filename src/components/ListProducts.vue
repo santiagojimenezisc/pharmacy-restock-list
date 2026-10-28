@@ -7,32 +7,8 @@
             <h1 class="text-3xl font-semibold">{{ nameSector }}</h1>
         </nav>
 
-        <section
-            class="flex flex-col gap-2 p-4 rounded-lg border border-surface bg-surface-0 dark:bg-surface-900 xl:col-start-2 xl:row-start-1 xl:row-span-3 xl:sticky xl:top-6">
-            <h2 class="uppercase font-mono text-xs max-xl:hidden">Resumen del anaquel</h2>
-            <div>
-                <div class="uppercase font-mono text-xs">Por comprar</div>
-                <div class="text-3xl">{{ formatCurrency(totalIncomplete) }}</div>
-            </div>
-            <Button label="Ver desglose" :icon="showBreakdown ? 'pi pi-chevron-up' : 'pi pi-chevron-down'"
-                iconPos="right" text class="w-full xl:hidden!" :aria-expanded="showBreakdown"
-                @click="showBreakdown = !showBreakdown" />
-
-            <dl :class="showBreakdown ? 'flex' : 'hidden xl:flex'" class="flex-col gap-2">
-                <div class="flex justify-between">
-                    <dt>Comprados</dt>
-                    <dd>{{ formatCurrency(totalComplete) }}</dd>
-                </div>
-                <div class="flex justify-between">
-                    <dt>Por comprar</dt>
-                    <dd>{{ formatCurrency(totalIncomplete) }}</dd>
-                </div>
-                <div class="flex justify-between">
-                    <dt>Total del anaquel</dt>
-                    <dd>{{ formatCurrency(totalProducts) }}</dd>
-                </div>
-            </dl>
-        </section>
+        <SectorSummary :products="productsList"
+            class="xl:fixed xl:top-0 xl:right-0 xl:w-72 xl:h-screen xl:overflow-y-auto xl:rounded-none xl:border-0 xl:border-l" />
 
         <div class="flex flex-wrap items-center gap-4 xl:col-start-1">
             <IconField class="grow basis-64">
@@ -50,7 +26,7 @@
                 <Checkbox :modelValue="isComplete" :inputId="String(id)" binary size="large"
                     class="[--p-checkbox-lg-width:1.75rem] [--p-checkbox-lg-height:1.75rem] [--p-checkbox-icon-lg-size:1rem]"
                     @update:modelValue="checkedProductList(id)" />
-                <Label :for="id" class="flex flex-col items-start! text-left">
+                <Label :for="id" class="flex flex-col items-start! gap-0.5! text-left">
                     <span>{{ name }}</span>
                     <span class="text-muted-color max-xl:hidden">{{ laboratoryName }} · {{ description }}</span>
                     <span class="text-muted-color xl:hidden">{{ description }} · {{ quantity }} {{ quantity === 1 ? 'pza' : 'pzas' }}</span>
@@ -58,7 +34,7 @@
                 <p class="text-muted-color text-right max-xl:hidden">
                     {{ formatCurrency(price) }} × {{ quantity }} {{ quantity === 1 ? 'pza' : 'pzas' }}
                 </p>
-                <Avatar :label="getInitials(supplierName)" shape="circle" v-tooltip="supplierName" class="max-xl:hidden!" />
+                <Avatar :label="getInitials(supplierName || 'Otro')" shape="circle" class="max-xl:hidden!" />
                 <p class="text-right">{{ formatCurrency(price * quantity) }}</p>
                 <Button icon="pi pi-ellipsis-v" text rounded severity="secondary" :aria-label="`Opciones de ${name}`"
                     aria-haspopup="true" aria-controls="product-menu" @click="openMenu($event, id)" />
@@ -83,6 +59,7 @@ import { useToast } from 'primevue/usetoast'
 import { formatCurrency, getInitials, normalizeText } from '@/helpers/commons'
 import type { Product } from '@/interfaces'
 import { toggleProductStatus } from '@/services/products'
+import SectorSummary from '@/components/SectorSummary.vue'
 
 const props = defineProps<{
     nameSector: string,
@@ -97,7 +74,6 @@ const emit = defineEmits<{
 const { nameSector, productsList } = toRefs(props)
 const barSearch = ref("")
 const statusFilter = ref<'all' | 'pending' | 'complete'>('all')
-const showBreakdown = ref(false)
 const toast = useToast()
 const menu = useTemplateRef<InstanceType<typeof Menu>>('menu')
 const selectedProduct = ref<Product | null>(null)
@@ -162,19 +138,4 @@ const productsFiltered = computed(() => {
         normalizeText(product.name).includes(search)
     )
 })
-
-// Los totales son del anaquel completo; el buscador solo cambia lo que se ve en la lista
-const totalIncomplete = computed(() =>
-    productsList.value
-        .filter((product: Product) => !product.isComplete)
-        .reduce((total, product) => total + product.price * product.quantity, 0)
-);
-
-const totalComplete = computed(() =>
-    productsList.value
-        .filter((product: Product) => product.isComplete)
-        .reduce((total, product) => total + product.price * product.quantity, 0)
-);
-
-const totalProducts = computed(() => totalIncomplete.value + totalComplete.value);
 </script>

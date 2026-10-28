@@ -10,8 +10,8 @@ export interface Product {
   laboratoryId: number;
   laboratoryName: string;
 
-  supplierId: number;
-  supplierName: string;
+  supplierId: number | null;
+  supplierName: string | null;
 
   sectorId: number;
   sectorName: string;
