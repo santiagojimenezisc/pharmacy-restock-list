@@ -11,10 +11,18 @@
         <Button label="Agregar" icon="pi pi-plus" size="large" rounded raised @click="openNewProduct" />
     </div>
 
-    <Dialog v-model:visible="showProductForm" :header="editingProduct ? 'Editar producto' : 'Agregar producto'" modal
-        :style="{ width: '50rem' }" :breakpoints="{ '640px': '100vw' }"
-        class="max-sm:h-dvh! max-sm:max-h-dvh! max-sm:rounded-none!">
-        <ProductForm :product="editingProduct" @saved="onProductSaved" />
+    <Dialog v-model:visible="showProductForm" modal :style="{ width: '50rem' }" :breakpoints="{ '640px': '100vw' }"
+        class="max-sm:h-dvh! max-sm:max-h-dvh! max-sm:rounded-none!" pt:content:class="overflow-x-hidden">
+        <template #header>
+            <div class="flex flex-col">
+                <span class="text-xl font-semibold">{{ editingProduct ? 'Editar producto' : 'Agregar producto' }}</span>
+                <span class="text-sm text-muted-color">
+                    {{ editingProduct ? `${editingProduct.name} · ${editingProduct.sectorName}` : `Se agregará a ${sectorName}` }}
+                </span>
+            </div>
+        </template>
+        <ProductForm :product="editingProduct" :sectorId="sectorId" @saved="onProductSaved"
+            @cancel="showProductForm = false" />
     </Dialog>
 </template>
 
