@@ -1,67 +1,67 @@
 export interface Product {
-  id: number;
-  name: string;
-  activeSubstance: string;
-  description: string;
-  quantity: number;
-  grammage: string;
-  price: number;
+  id: number
+  name: string
+  activeSubstance: string
+  description: string
+  quantity: number
+  grammage: string
+  price: number
 
-  laboratoryId: number;
-  laboratoryName: string;
+  laboratoryId: number
+  laboratoryName: string
 
-  supplierId: number | null;
-  supplierName: string | null;
+  supplierId: number | null
+  supplierName: string | null
 
-  sectorId: number;
-  sectorName: string;
+  sectorId: number
+  sectorName: string
 
-  category: string;
-  tags: string[] | "";
-  isMedicine: boolean;
-  isComplete: boolean;
-  createdAt: string;
+  category: string
+  tags: string[] | ''
+  isMedicine: boolean
+  isComplete: boolean
+  createdAt: string
 }
 
 export interface NewProduct {
-  name: string;
-  activeSubstance: string;
-  description: string;
-  quantity: number;
-  grammage: string;
-  price: number;
-  laboratoryId: number;
-  supplierId: number;
-  sectorId: number;
-  category: string;
-  tags: string[];
-  isMedicine: boolean;
+  name: string
+  activeSubstance: string
+  description: string
+  quantity: number
+  grammage: string
+  price: number
+  laboratoryId: number
+  supplierId: number
+  sectorId: number
+  category: string
+  tags: string[]
+  isMedicine: boolean
 }
 
 export interface CreateProductResponse {
-  message: string;
-  id: number;
+  message: string
+  id: number
 }
 
 export interface CatalogItem {
-  id: number;
-  name: string;
-  active: boolean;
+  id: number
+  name: string
+  active: boolean
 }
 
 export interface NewSector {
-  name: string;
-  description?: string;
+  name: string
+  description?: string
 }
 
 export interface CreateSectorResponse {
-  message: string;
-  id: number;
+  message: string
+  id: number
 }
 
 export interface SectorList {
-  sectorId: number;
-  sectorName: string;
-  totalProducts: number;
-  incompleteProducts: number;
+  sectorId: number
+  sectorName: string
+  totalProducts: number
+  incompleteProducts: number
 }

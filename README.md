@@ -37,6 +37,7 @@ Esta app guarda los productos con su precio de costo y su proveedor, los organiz
 - **Tailwind CSS**
 - **Vue Router**
 - **Vite**
+- **Vitest** para pruebas, **ESLint** para revisar el código y **Prettier** para darle formato
 - Servidor (backend): **Express.js** + **MySQL** (repositorio aparte)
 
 ## Cómo correrlo
@@ -59,6 +60,9 @@ Otros comandos:
 ```sh
 npm run build        # revisa tipos y compila para producción
 npm run type-check   # solo revisa tipos
+npm run test:unit    # pruebas con Vitest (en modo vigilancia)
+npm run lint         # revisa el código con ESLint y corrige lo automático
+npm run format       # da formato al código con Prettier
 ```
 
 ## Estructura
@@ -85,5 +89,5 @@ Este es el primer módulo de un punto de venta pensado para el flujo de trabajo 
 - [ ] Total por comprar de cada anaquel en la vista de anaqueles
 - [ ] Vista de compras agrupada por proveedor, con el total a pagar en cada uno
 - [ ] Modo sin backend con datos de ejemplo (MSW)
-- [ ] Pruebas automatizadas y linter
+- [x] ~~Pruebas automatizadas y linter~~
 - [ ] Demo en línea
