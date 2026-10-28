@@ -15,6 +15,7 @@ Esta app guarda los productos con su precio de costo y su proveedor, los organiz
 ## Funcionalidades
 
 - Sectores (anaqueles) agrupados en con pendientes, completos y sin productos, con su avance; desde un anaquel vacío se agregan productos directo.
+- Crear anaqueles (sin nombres repetidos, aunque cambien acentos o mayúsculas), cambiarles el nombre desde su tarjeta y eliminar los que están vacíos, con confirmación.
 - Lista de productos por sector, con laboratorio, precio de costo × cantidad y proveedor.
 - Agregar y editar productos en un formulario con validación por campo: los laboratorios, proveedores y anaqueles se cargan del servidor, y el anaquel abierto viene preseleccionado.
 - Eliminar productos desde el menú de cada renglón, con confirmación.
@@ -65,7 +66,7 @@ npm run type-check   # solo revisa tipos
 ```
 src/
 ├── pages/        pantallas (lista de anaqueles y productos de un anaquel)
-├── components/   piezas de interfaz (listas, resumen del anaquel y formulario)
+├── components/   piezas de interfaz (listas, resumen del anaquel y formularios de producto y anaquel)
 ├── services/     llamadas al API; los componentes nunca usan fetch directo
 ├── helpers/      funciones puras (formato de moneda, búsqueda sin acentos, reglas del formulario)
 ├── interfaces/   tipos de TypeScript
@@ -80,7 +81,8 @@ Este es el primer módulo de un punto de venta pensado para el flujo de trabajo 
 
 - [x] ~~Agregar productos~~
 - [x] ~~Editar y borrar productos~~
-- [ ] Crear, editar y borrar anaqueles
+- [x] ~~Crear, editar y borrar anaqueles~~
+- [ ] Total por comprar de cada anaquel en la vista de anaqueles
 - [ ] Vista de compras agrupada por proveedor, con el total a pagar en cada uno
 - [ ] Modo sin backend con datos de ejemplo (MSW)
 - [ ] Pruebas automatizadas y linter
