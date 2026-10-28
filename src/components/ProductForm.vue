@@ -94,8 +94,8 @@
                 <Message v-if="$field?.invalid" severity="error" size="small" variant="simple">
                     {{ $field.error?.message }}
                 </Message>
-                <small v-else-if="!product && $field?.value === sectorId" class="text-muted-color">
-                    Es el anaquel que tenías abierto.
+                <small v-else-if="!product && sectorId && $field?.value === sectorId" class="text-muted-color">
+                    Es el anaquel que elegiste.
                 </small>
             </FormField>
 
@@ -152,7 +152,7 @@ import { createProduct, updateProduct } from '@/services/products'
 
 const props = defineProps<{
     product: Product | null
-    sectorId: number
+    sectorId: number | null
 }>()
 
 const emit = defineEmits<{

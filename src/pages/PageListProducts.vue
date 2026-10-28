@@ -1,38 +1,27 @@
 <template>
     <!-- pb-24 deja un espacio al final para que el botón flotante no tape los totales -->
-    <div class="pb-24">
+    <div class="pb-24 lg:pb-0">
         <Skeleton v-if="isLoading" height="20rem" />
         <Message v-else-if="errorMessage" severity="error">{{ errorMessage }}</Message>
-        <ListProducts v-else :nameSector="sectorName" :productsList="productsList" @edit="openEditProduct"
-            @delete="confirmDeleteProduct" />
+        <ListProducts v-else :nameSector="sectorName" :productsList="productsList" @add="openNewProduct"
+            @edit="openEditProduct" @delete="confirmDeleteProduct" />
     </div>
 
-    <div v-if="!showProductForm" class="fixed bottom-6 right-6">
-        <Button label="Agregar" icon="pi pi-plus" size="large" rounded raised @click="openNewProduct" />
+    <div v-if="!showProductForm" class="fixed bottom-6 right-6 lg:hidden">
+        <Button label="Agregar producto" icon="pi pi-plus" size="large" rounded raised @click="openNewProduct" />
     </div>
 
-    <Dialog v-model:visible="showProductForm" modal :style="{ width: '50rem' }" :breakpoints="{ '640px': '100vw' }"
-        class="max-sm:h-dvh! max-sm:max-h-dvh! max-sm:rounded-none!" pt:content:class="overflow-x-hidden">
-        <template #header>
-            <div class="flex flex-col">
-                <span class="text-xl font-semibold">{{ editingProduct ? 'Editar producto' : 'Agregar producto' }}</span>
-                <span class="text-sm text-muted-color">
-                    {{ editingProduct ? `${editingProduct.name} · ${editingProduct.sectorName}` : `Se agregará a ${sectorName}` }}
-                </span>
-            </div>
-        </template>
-        <ProductForm :product="editingProduct" :sectorId="sectorId" @saved="onProductSaved"
-            @cancel="showProductForm = false" />
-    </Dialog>
+    <ProductDialog v-model:visible="showProductForm" :product="editingProduct" :sectorId="sectorId"
+        :sectorName="sectorName" @saved="refreshProducts" />
 </template>
 
 <script setup lang="ts">
-import ProductForm from '@/components/ProductForm.vue'
+import ProductDialog from '@/components/ProductDialog.vue'
 import ListProducts from '@/components/ListProducts.vue'
 import type { Product } from '@/interfaces'
 import { deleteProduct } from '@/services/products'
 import { getProductsBySector } from '@/services/sectors'
-import { Button, Dialog, Message, Skeleton } from 'primevue'
+import { Button, Message, Skeleton } from 'primevue'
 import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from 'primevue/usetoast'
 import { computed, onMounted, ref } from 'vue'
@@ -77,11 +66,6 @@ const refreshProducts = async () => {
     } catch (error) {
         console.error(error)
     }
-}
-
-const onProductSaved = () => {
-    showProductForm.value = false
-    refreshProducts()
 }
 
 const confirmDeleteProduct = (product: Product) => {

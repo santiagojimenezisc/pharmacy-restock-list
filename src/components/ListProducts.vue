@@ -1,11 +1,14 @@
 <template>
     <div
         class="flex flex-col gap-4 xl:grid xl:grid-cols-[minmax(0,1fr)_18rem] xl:grid-rows-[auto_auto_1fr] xl:items-start">
-        <nav aria-label="Ruta" class="flex items-baseline gap-2 xl:col-start-1">
-            <RouterLink to="/" class="text-muted-color hover:text-color">Anaqueles</RouterLink>
-            <span aria-hidden="true" class="text-muted-color">/</span>
-            <h1 class="text-3xl font-semibold">{{ nameSector }}</h1>
-        </nav>
+        <div class="flex items-center justify-between gap-4 xl:col-start-1">
+            <nav aria-label="Ruta" class="flex items-baseline gap-2">
+                <RouterLink to="/" class="text-muted-color hover:text-color">Anaqueles</RouterLink>
+                <span aria-hidden="true" class="text-muted-color">/</span>
+                <h1 class="text-3xl font-semibold">{{ nameSector }}</h1>
+            </nav>
+            <Button label="Agregar producto" icon="pi pi-plus" class="max-lg:hidden!" @click="emit('add')" />
+        </div>
 
         <SectorSummary :products="productsList"
             class="xl:fixed xl:top-0 xl:right-0 xl:w-72 xl:h-screen xl:overflow-y-auto xl:rounded-none xl:border-0 xl:border-l" />
@@ -67,6 +70,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
+    add: []
     edit: [product: Product]
     delete: [product: Product]
 }>()
